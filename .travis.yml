@@ -1,0 +1,25 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t weonheec/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true asone77/react-test npm test
+
+after_success:
+    - docker build -t weonheec/multi-client ./client
+    - docker build -t weonheec/multi-nginx ./nginx
+    - docker build -t weonheec/multi-server ./server
+    - docker build -t weonheec/multi-worker ./worker
+    # Log in to the docker CLI. 
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+    # Take those images and push them to docker hub
+    - docker push weonheec/multi-client ./client
+    - docker push weonheec/multi-nginx ./nginx
+    - docker push weonheec/multi-server ./server
+    - docker push weonheec/multi-worker ./worker
+
+
