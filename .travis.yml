@@ -18,9 +18,9 @@ after_success:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
     # Take those images and push them to docker hub
-    - docker push weonheec/multi-client ./client
-    - docker push weonheec/multi-nginx ./nginx
-    - docker push weonheec/multi-server ./server
-    - docker push weonheec/multi-worker ./worker
+    - docker push weonheec/multi-client 
+    - docker push weonheec/multi-nginx 
+    - docker push weonheec/multi-server 
+    - docker push weonheec/multi-worker 
 
 
